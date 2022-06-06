@@ -1,0 +1,13 @@
+.DS_Store
+.git
+.nuxt
+.tox
+.pytest_cache
+.mypy_cache
+*venv
+*.orig
+*.swp
+*.pyc
+__pycache__
+node_modules
+npm-debug.log
