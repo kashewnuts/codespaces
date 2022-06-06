@@ -1,5 +1,16 @@
 version: "3"
 services:
+  backend:
+    build: backend
+    ports:
+      - "127.0.0.1:8000:8000"
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+      python manage.py --version
+      && python manage.py runserver 0.0.0.0:8000"
+
   frontend:
     build: frontend
     ports:
