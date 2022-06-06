@@ -1,15 +1,38 @@
 version: "3"
 services:
+  db:
+    image: postgres:14
+    volumes:
+      - ./.var/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+
   backend:
     build: backend
     ports:
       - "127.0.0.1:8000:8000"
+    depends_on:
+      - db
     tty: true
     stdin_open: true
+    working_dir: /backend
+    entrypoint:
+      - "/bin/bash"
+      - "-c"
+      - "/wait-for-postgres.sh ${DB_PASSWORD} ${DB_USER} ${DB_NAME}; \"$${@}\""
+      - "bash"
     command: >
       bash -c "
-      python manage.py --version
+      python manage.py migrate
       && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      DJANGO_SECRET_KEY:
+      DJANGO_DEBUG:
+      DJANGO_ALLOWED_HOSTS:
+      DATABASE_URL: "psql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}"
+      LOG_LEVEL:
 
   frontend:
     build: frontend
