@@ -7,15 +7,19 @@
       // Update 'VARIANT' to pick a Python version: 3, 3.10, 3.9, 3.8, 3.7, 3.6
       // Append -bullseye or -buster to pin to an OS version.
       // Use -bullseye variants on local on arm64/Apple Silicon.
-      "VARIANT": "3.9-bullseye",
+      "VARIANT": "3.10-bullseye",
       // Options
       "NODE_VERSION": "16"
     }
   },
   "overrideCommand": false,
-  "mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
-  "runArgs": ["--init", "--privileged"],
-
+  "mounts": [
+    "source=dind-var-lib-docker,target=/var/lib/docker,type=volume"
+  ],
+  "runArgs": [
+    "--init",
+    "--privileged"
+  ],
   "containerEnv": {
     // BuildKitについて https://qiita.com/tatsurou313/items/ad86da1bb9e8e570b6fa
     "DOCKER_BUILDKIT": "1",
@@ -37,9 +41,13 @@
     "python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
     "python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
     "python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
-    "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
+    "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint",
+    "python.linting.flake8Args": [
+      "--ignore=W293, W504",
+      "--max-line-length=99",
+      "--max-complexity=15"
+    ]
   },
-
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
     "ms-azuretools.vscode-docker",
@@ -50,16 +58,15 @@
     "eg2.vscode-npm-script",
     "christian-kohler.npm-intellisense",
     "VisualStudioExptTeam.vscodeintellicode",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "Vue.volar"
   ],
-
   // Use 'onCreateCommand' to run commands after the container is created.
   "onCreateCommand": "bash .devcontainer/on_create_command.sh",
   // Use 'postCreateCommand' to run commands once the dev container has been assigned to a user for the first time.
   // "postCreateCommand": "bash .devcontainer/post_create_command.sh",
   // Use 'postStartCommand' to run commands each time on start container.
   // "postStartCommand": "bash .devcontainer/post_start_command.sh",
-
   // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "vscode"
 }
