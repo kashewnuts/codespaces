@@ -1,3 +1,27 @@
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+description = ""
+authors = ["kashewnuts <kashun.nuts@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^3.2"
+psycopg2 = "^2.9.3"
+django-environ = "^0.8.1"
+
+[tool.poetry.dev-dependencies]
+Black = "^22.3.0"
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+taskipy = "^1.10.2"
+mypy = "^0.961"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.black]
 line-length = 99
 exclude = '''
@@ -33,3 +57,13 @@ skip = '''
     scripts
 '''
 no_lines_before = "LOCALFOLDER"
+
+[tool.taskipy.tasks]
+test = { cmd = "pytest tests", help = "runs all unit tests" }
+pr_test = "task lint"
+fmt = { cmd = "black .", help = "format code" }
+lint = { cmd = "task lint_black && task lint_flake8 && task lint_mypy", help = "exec lint" }
+lint_flake8 = "flake8 --max-line-length=99 ."
+lint_mypy = "mypy ."
+lint_black = "black --check ."
+
