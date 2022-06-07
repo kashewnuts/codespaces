@@ -10,7 +10,8 @@ docker-compose up --build --no-start
 docker-compose stop  # prebuildのため落としておきたい
 
 # install python packages for local development
-(cd backend && pip install -r requirements.lock --no-warn-script-location)
+pipx install poetry
+(cd backend && poetry install)
 
 # install node.js packages for local development
 (cd frontend && npm install)
