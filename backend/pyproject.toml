@@ -10,6 +10,7 @@ python = "^3.9"
 Django = "^3.2"
 psycopg2 = "^2.9.3"
 django-environ = "^0.8.1"
+gunicorn = "^20.1.0"
 
 [tool.poetry.dev-dependencies]
 Black = "^22.3.0"

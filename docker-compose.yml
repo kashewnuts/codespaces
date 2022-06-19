@@ -21,17 +21,14 @@ services:
     entrypoint:
       - "/bin/bash"
       - "-c"
-      - "/wait-for-postgres.sh ${DB_PASSWORD} ${DB_USER} ${DB_NAME}; \"$${@}\""
+      - "./wait-for-postgres.sh ${DB_PASSWORD} ${DB_USER} ${DB_NAME}; \"$${@}\""
       - "bash"
     command: >
       bash -c "
-      .venv/bin/python manage.py migrate
-      && .venv/bin/python manage.py runserver 0.0.0.0:8000"
-    environment:
-      DJANGO_SECRET_KEY:
-      DJANGO_DEBUG:
-      DJANGO_ALLOWED_HOSTS:
-      DATABASE_URL: "psql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}"
+      poetry run python manage.py migrate
+      && poetry run python manage.py runserver 0.0.0.0:8000"
+    env_file:
+      - ./.env
 
   frontend:
     build: frontend
