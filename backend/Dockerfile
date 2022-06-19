@@ -9,6 +9,7 @@ RUN apt-get -y update -q\
       build-essential \
       libpq5 \
       libpq-dev \
+      postgresql-client \
     && pip install poetry --no-cache-dir \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
