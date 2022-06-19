@@ -8,3 +8,10 @@
 ```bash
 $ docker-compose -f docker-compose.yml -f docker-compose.nginx.yml up -d
 ```
+
+
+## 本番向けビルド
+
+```bash
+$ docker-compose build --build-arg BUILD_ENV=production <service_name>
+```
